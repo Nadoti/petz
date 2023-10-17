@@ -1,3 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* Aplique a fonte ao corpo do documento */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
