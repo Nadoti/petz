@@ -9,7 +9,10 @@ export default function QuemSomos() {
       <Head>
         <title>Quem somos</title>
       </Head>
-      <DetailsPage />
+      <DetailsPage 
+        title="Quem Somos"
+        text="A maior rede de tratamento pokémon."
+      />
       <div className="w-full pt-9 pb-16">
         <div className="w-full max-w-[408px] mx-auto text-black">
           <h3 className="text-xl font-bold mb-4">O Centro Pokémon</h3>
