@@ -1,31 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useDataPokemonContext } from "context/PokemonContext";
+import { useCloseOnOutsideClick } from "hooks/useCloseOnOutsideClick";
+import { useRef, useState } from "react";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
-import { CityDataType } from "../../types/city-types";
-import { useDataPokemonContext } from "../../context/PokemonContext";
+
 
 
 export function SelectCity() {
   const selectRef = useRef<HTMLDivElement | null>(null);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const { cityData, valueSelectedCity, setValueSelectedCity } = useDataPokemonContext()
-  
-  function closeSelect() {
+  useCloseOnOutsideClick(selectRef, isSelectOpen, () => {
     setIsSelectOpen(false);
-  };
-
-  function handleClickOutside(event: MouseEvent) {
-    if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-      closeSelect();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  });
 
   return (
     <div className="w-full flex flex-col gap-1">
@@ -38,6 +24,10 @@ export function SelectCity() {
           type="button"
           onClick={() => setIsSelectOpen(!isSelectOpen)}
           className="flex w-full items-center justify-between px-4 py-3 cursor-pointer"
+          aria-labelledby="select button"
+          aria-haspopup="listbox"
+          aria-expanded={isSelectOpen}
+          aria-controls="select-dropdown"
         >
           <span className="text-sm text-zinc-500">{valueSelectedCity}</span>
           {isSelectOpen
@@ -48,11 +38,12 @@ export function SelectCity() {
           ? (
             <ul
               className="absolute w-full list-none max-h-28 flex flex-col items-start border border-zinc-300 shadow-lg rounded-b-lg overflow-y-scroll scroll z-10 bg-white"
+              role="listbox"
             >
               {cityData?.map((city) => (
                 <li
                   key={city.name}
-                  className="relative w-full flex items-center justify-sel text-zinc-500 hover:bg-gray-200">
+                  className="relative w-full flex items-center justify-sel text-zinc-500 hover:bg-gray-200" role="option">
                   <input
                     type="radio"
                     name={city.name}

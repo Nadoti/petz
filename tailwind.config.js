@@ -11,7 +11,7 @@ module.exports = {
         'pokemon': "url('../public/images/pokemon-hero.jpg')",
       },
       minHeight: {
-        'screen-bg-image': 'calc(100vh - 158px)',
+        'screen-bg-image': 'calc(100vh - 164px)',
       },
       fontSize: {
         '3x2': '32px'

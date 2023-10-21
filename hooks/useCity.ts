@@ -11,7 +11,7 @@ export function useCity(url: string) {
 
   const { data, isLoading } = useQuery({
     queryFn: () => fetcher(url),
-    queryKey: ['city', url]
+    queryKey: ['city', url],
   })
 
   return {

@@ -1,44 +1,55 @@
 import { BsPlus } from "react-icons/bs";
-import { useEffect, useState} from "react"
 import { v4 as uuidv4 } from 'uuid';
-import { useDataPokemonContext } from "../../context/PokemonContext";
+import { useDataPokemonContext } from "context/PokemonContext";
 import { SelectPokemon } from "../form/SelectPokemon";
-
+import { notification } from "utils/notification";
+import { useState } from "react"
 
 
 export function RegisterTeam() {
-  const { listPokemonRegistered, setListPokemonRegistered } = useDataPokemonContext()
-
+  const { listPokemonRegistered, setListPokemonRegistered, cityUrl, valueListPokemonRegistered, setValueListPokemonRegistered } = useDataPokemonContext()
+  
   function registerNewPokemon() {
     if(listPokemonRegistered.length === 6) {
-      alert("O Maximo de Pokemon é 6")
+      notification({type: "error", message: "O Registro não pode ultrapassar 6 pokémons"})
       return;
     }
-    const newPokemonInList = [
-      ...listPokemonRegistered,
-      {
-        id: uuidv4(),
-      }
-    ]
-    setListPokemonRegistered(newPokemonInList)
+    if(!cityUrl) {
+      notification({type: "error", message: "Escolha a região onde ocorrerá o atendimento"})
+      return;
+    }
+    const id = uuidv4()
+    
+    setListPokemonRegistered((prevValue) => [
+      ...prevValue,
+      { id: id },
+    ]);
+
+    setValueListPokemonRegistered((prevValue) => ({
+      ...prevValue,
+      [id]: "Selecione seu pokémon",
+    }));
   }
 
   function RemovePokemon(id: string) {
     const removePokemonList = listPokemonRegistered.filter(data => data.id !== id)
+    const newObj = { ...valueListPokemonRegistered };
+    delete newObj[id];
+    setValueListPokemonRegistered(newObj);
     setListPokemonRegistered(removePokemonList)
   }
-
+  console.log(valueListPokemonRegistered)
   return (
     <section>
       <div className="flex flex-col gap-2 mb-4">
-        <h4 className="text-xs font-bold text-black">Cadastreu seu time</h4>
+        <h1 className="text-xs font-bold text-black">Cadastreu seu time</h1>
         <p className="text-xs text-zinc-500">Atendemos até 06 pokémons por vez</p>
       </div>
       <div>
         {listPokemonRegistered?.map((dataPokemon, index) => (
           <div key={dataPokemon.id} className="flex items-center mb-8">
             <span className="text-xs text-black font-bold min-w-max mr-9">Pokemon 0{index+1}</span>
-            <SelectPokemon />
+            <SelectPokemon name={dataPokemon.id} value={valueListPokemonRegistered[dataPokemon.id]} setValue={setValueListPokemonRegistered}/>
             <button
               onClick={() => RemovePokemon(dataPokemon.id)}
               type="button"
@@ -59,16 +70,6 @@ export function RegisterTeam() {
           <BsPlus size={20} />
         </button>
       </div>
-      {/* <span className="flex gap-4">
-        <Select 
-          states={states}
-          region="Data para Atendimento"
-        />
-        <Select 
-          states={states}
-          region="Horário de Atendimento"
-        />
-      </span> */}
     </section>
   )
 }

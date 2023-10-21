@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
 
 
-const fetcher = (date: string): AxiosPromise => {
+const fetcher = (date: string): AxiosPromise<|string[] | undefined> => {
   return axios.post("http://localhost:3000/api/scheduling/time", {
     date: date
   })
@@ -14,7 +14,6 @@ export function useTime(date: string) {
     queryFn: () => fetcher(date),
     queryKey: ['time']
   })
-  console.log(data)
   return {
     timeData: data?.data
   }

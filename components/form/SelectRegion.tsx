@@ -1,41 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
-import { RegionDataType } from "../../types/region-types";
-import { useRegion } from "../../hooks/useRegion";
-import { useDataPokemonContext } from "../../context/PokemonContext";
+import { useDataPokemonContext } from "context/PokemonContext";
+import { useRegion } from "hooks/useRegion";
+import { RegionDataType } from "types/region-types";
+import { useCloseOnOutsideClick } from "hooks/useCloseOnOutsideClick";
+import { IValueListPokemonRegistered } from "types/context-pokemon-types";
 
 
 export function SelectRegion() {
   const selectRef = useRef<HTMLDivElement | null>(null);
   const { regionData } = useRegion();
-  const { setCity, setValueSelectedCity, setValueSelectedPokemon } = useDataPokemonContext();
+  const { setCityUrl, setValueSelectedCity, setValueSelectedPokemon, valueListPokemonRegistered, setValueListPokemonRegistered } = useDataPokemonContext();
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [valueSelected, setValueSelected] = useState("Selecione sua cidade");
-
-  function closeSelect() {
+  useCloseOnOutsideClick(selectRef, isSelectOpen, () => {
     setIsSelectOpen(false);
-  };
-
-  function handleClickOutside(event: MouseEvent) {
-    if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-      closeSelect();
-    }
-  };
+  });
 
   function onChangeSelect(region: RegionDataType) {
+    const updatedTeste: IValueListPokemonRegistered = {};
+    for (const key in valueListPokemonRegistered) {
+      if (valueListPokemonRegistered.hasOwnProperty(key)) {
+        updatedTeste[key] = 'Selecione seu pokémon';
+      }
+    }
+    setValueListPokemonRegistered(updatedTeste);
+
     setValueSelectedCity("Selecione sua cidade")
     setValueSelectedPokemon("Selecione seu pokémon")
-    setCity(region.url)
+    setCityUrl(region.url)
     setValueSelected(region.name);
     setIsSelectOpen(false);
   }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="w-full flex flex-col gap-1">
@@ -48,6 +44,10 @@ export function SelectRegion() {
           type="button"
           onClick={() => setIsSelectOpen(!isSelectOpen)}
           className="flex w-full items-center justify-between px-4 py-3 cursor-pointer"
+          aria-labelledby="select button"
+          aria-haspopup="listbox"
+          aria-expanded={isSelectOpen}
+          aria-controls="select-dropdown"
         >
           <span className="text-sm text-zinc-500">{valueSelected}</span>
           {isSelectOpen
@@ -58,11 +58,12 @@ export function SelectRegion() {
           ? (
             <ul
               className="absolute w-full list-none max-h-28 flex flex-col items-start border border-zinc-300 shadow-lg rounded-b-lg overflow-y-scroll scroll z-10 bg-white"
+              role="listbox"
             >
               {regionData?.map((region) => (
                 <li
                   key={region.name}
-                  className="relative w-full flex items-center justify-sel text-zinc-500 hover:bg-gray-200">
+                  className="relative w-full flex items-center justify-sel text-zinc-500 hover:bg-gray-200" role="option">
                   <input
                     type="radio"
                     name={region.name}

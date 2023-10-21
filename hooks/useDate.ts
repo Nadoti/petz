@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
 
 
-const fetcher = (): AxiosPromise => {
+const fetcher = (): AxiosPromise<string[] | undefined> => {
   return axios.get("http://localhost:3000/api/scheduling/date")
 }
 

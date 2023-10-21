@@ -4,7 +4,6 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<Array<String>>
 ) {
-    console.log("vendo o req", req.body)
     if (req.method !== 'POST') {
         res.status(405).end()
         return

@@ -1,48 +1,37 @@
-import { PokemonContextProvider } from "../../context/PokemonContext";
-import { Input } from "../form/Input";
-import { RegisterTeam } from "./RegisterTeam";
-import { SchedulingPrice } from "./SchedulingPrice";
 import { SelectRegionCityForm } from "./SelectRegionCityForm";
+import { RegisterTeam } from "./RegisterTeam";
 import { ServiceDate } from "./ServiceDate";
+import { SchedulingPrice } from "./SchedulingPrice";
+import { UserData } from "./UserData";
+import { useRouter } from "next/router";
+import { useDataPokemonContext } from "context/PokemonContext";
 
-
-export function FormScheduleAppointment() {
-  
-  
-  return (
-    <PokemonContextProvider>
-      <form className="">
-        <section className="flex gap-4 mb-8">
-          <Input 
-            label="Nome"
-            name="nome"
-            id="nome"
-            placeholder="Digite seu nome"
-            />
-          <Input 
-            label="Sobrenome"
-            name="sobrenome"
-            id="sobrenome"
-            placeholder="Digite seu Sobrenome"
-          />
-        </section>
-        <SelectRegionCityForm />
-        <RegisterTeam />
-        <ServiceDate />
-        <div className="w-full border-t-2 border-zinc-300 my-8" />
-        <SchedulingPrice />
-      </form>
-    </PokemonContextProvider>
-  )
+type IFormScheduleAppointment = {
+  setStepAppointment: React.Dispatch<React.SetStateAction<string>>;
 }
 
-
-
-// export async function getServerSideProps() {
-//   // Fetch data from external API
-//   const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
-//   const data = await res.json()
-//   console.log(data)
-//   // Pass data to the page via props
-//   return { props: { data } }
-// }
+export function FormScheduleAppointment({ setStepAppointment }: IFormScheduleAppointment ) {
+  const {timeValue, dateValue, listPokemonRegistered, valueSelectedCity} = useDataPokemonContext()
+  const router = useRouter();
+  function completeAppointment(event: React.FormEvent) {
+    event.preventDefault();
+    const { name, surname } = router.query;
+    if(!name && surname) {}
+  }
+  
+  return (
+    <div className="w-full pt-9 pb-16">
+      <div className="w-full max-w-[652px] mx-auto">
+        <h2 className="text-2xl font-semibold text-black mb-8">Preencha o formulário abaixo para agendar sua consulta</h2>
+        <form onSubmit={completeAppointment}>
+          <UserData />
+          <SelectRegionCityForm />
+          <RegisterTeam />
+          <ServiceDate />
+          <div className="w-full border-t-2 border-zinc-300 my-8" />
+          <SchedulingPrice setStepAppointment={setStepAppointment}/>
+        </form>
+      </div>
+    </div>
+  )
+}
