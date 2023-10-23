@@ -1,3 +1,6 @@
+# Conclusao do desafio
+Desafio concluido, responsivo
+
 # PETZ
  
 Teste técnico para desenvolvimento frontend – React/NextJS.
