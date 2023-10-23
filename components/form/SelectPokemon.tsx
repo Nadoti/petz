@@ -13,7 +13,7 @@ type ISelectPokemon = {
 export function SelectPokemon({ name, value, setValue }: ISelectPokemon) {
   const selectRef = useRef<HTMLDivElement | null>(null);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const { pokemonData, valueSelectedPokemon, setValueSelectedPokemon } = useDataPokemonContext()
+  const { pokemonData } = useDataPokemonContext()
   useCloseOnOutsideClick(selectRef, isSelectOpen, () => {
     setIsSelectOpen(false);
   });
@@ -58,7 +58,6 @@ export function SelectPokemon({ name, value, setValue }: ISelectPokemon) {
                         ...prev,
                         [event.target.name]: pokemon.name,
                       }))
-                      setValueSelectedPokemon(pokemon.name)
                       setIsSelectOpen(false);
                     }}
                   />

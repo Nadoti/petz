@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
 import { RegionType } from "../types/region-types"
-
+import { errorNotification, notification } from "utils/notification"
 
 const fetcher = (): AxiosPromise<RegionType> => {
   return axios.get("https://pokeapi.co/api/v2/region/")
@@ -9,11 +9,16 @@ const fetcher = (): AxiosPromise<RegionType> => {
 
 export function useRegion() {
 
-  const { data } = useQuery({
+  const { data, error, isError } = useQuery({
     queryFn: () => fetcher(),
-    queryKey: ['region']
+    queryKey: ['region'],
+    retry: 3,
+    refetchOnWindowFocus: false,
   })
 
+  if(isError) {
+    notification({type: errorNotification, message: error.message})
+  }
   return {
     regionData: data?.data.results
   }

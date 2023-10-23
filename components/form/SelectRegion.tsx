@@ -10,7 +10,7 @@ import { IValueListPokemonRegistered } from "types/context-pokemon-types";
 export function SelectRegion() {
   const selectRef = useRef<HTMLDivElement | null>(null);
   const { regionData } = useRegion();
-  const { setCityUrl, setValueSelectedCity, setValueSelectedPokemon, valueListPokemonRegistered, setValueListPokemonRegistered } = useDataPokemonContext();
+  const { setCityUrl, setValueSelectedCity, valueListPokemonRegistered, setValueListPokemonRegistered } = useDataPokemonContext();
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const [valueSelected, setValueSelected] = useState("Selecione sua cidade");
   useCloseOnOutsideClick(selectRef, isSelectOpen, () => {
@@ -18,16 +18,14 @@ export function SelectRegion() {
   });
 
   function onChangeSelect(region: RegionDataType) {
-    const updatedTeste: IValueListPokemonRegistered = {};
-    for (const key in valueListPokemonRegistered) {
-      if (valueListPokemonRegistered.hasOwnProperty(key)) {
-        updatedTeste[key] = 'Selecione seu pokémon';
-      }
-    }
-    setValueListPokemonRegistered(updatedTeste);
+    const keys = Object.keys(valueListPokemonRegistered);
+    const updatedListPokemonRegistered = keys.reduce((acc: IValueListPokemonRegistered, key) => {
+      acc[key] = 'Selecione seu pokémon';
+      return acc;
+    }, {});
+    setValueListPokemonRegistered(updatedListPokemonRegistered);
 
     setValueSelectedCity("Selecione sua cidade")
-    setValueSelectedPokemon("Selecione seu pokémon")
     setCityUrl(region.url)
     setValueSelected(region.name);
     setIsSelectOpen(false);
@@ -78,7 +76,6 @@ export function SelectRegion() {
                   </label>
                 </li>
               ))}
-
             </ul>
           )
           : null}

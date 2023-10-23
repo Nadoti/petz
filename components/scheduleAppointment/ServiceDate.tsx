@@ -1,12 +1,10 @@
-import { useDataPokemonContext } from "../../context/PokemonContext";
-import { SelectTreatment } from "../form/SelectTreatment";
-
-
+import { useDataPokemonContext } from "context/PokemonContext"
+import { SelectTreatment } from "../form/SelectTreatment"
 
 export function ServiceDate() {
   const { dateData, dateValue, setDateValue, timeData, timeValue, setTimeValue } = useDataPokemonContext()
   return (
-    <section className="w-full flex gap-4">
+    <section className="w-full flex flex-col sm:flex-row gap-4">
       <SelectTreatment 
         value={dateValue}
         setValue={setDateValue}

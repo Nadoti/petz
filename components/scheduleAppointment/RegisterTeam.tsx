@@ -2,8 +2,7 @@ import { BsPlus } from "react-icons/bs";
 import { v4 as uuidv4 } from 'uuid';
 import { useDataPokemonContext } from "context/PokemonContext";
 import { SelectPokemon } from "../form/SelectPokemon";
-import { notification } from "utils/notification";
-import { useState } from "react"
+import { errorNotification, notification } from "utils/notification";
 
 
 export function RegisterTeam() {
@@ -11,11 +10,11 @@ export function RegisterTeam() {
   
   function registerNewPokemon() {
     if(listPokemonRegistered.length === 6) {
-      notification({type: "error", message: "O Registro não pode ultrapassar 6 pokémons"})
+      notification({type: errorNotification, message: "O Registro não pode ultrapassar 6 pokémons"})
       return;
     }
     if(!cityUrl) {
-      notification({type: "error", message: "Escolha a região onde ocorrerá o atendimento"})
+      notification({type: errorNotification, message: "Escolha a região onde ocorrerá o atendimento"})
       return;
     }
     const id = uuidv4()
@@ -38,7 +37,6 @@ export function RegisterTeam() {
     setValueListPokemonRegistered(newObj);
     setListPokemonRegistered(removePokemonList)
   }
-  console.log(valueListPokemonRegistered)
   return (
     <section>
       <div className="flex flex-col gap-2 mb-4">

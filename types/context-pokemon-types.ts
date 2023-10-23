@@ -9,7 +9,6 @@ export type IValueListPokemonRegistered = {
 export type IDataContextPokemon = {
   cityUrl: string;
   listPokemonRegistered: PokemonListRegistered[];
-  valueSelectedPokemon: string;
   valueSelectedCity: string;
   dateValue: string;
   cityData: CityDataType[] | undefined;
@@ -18,7 +17,6 @@ export type IDataContextPokemon = {
   pokemonData: PokemonDataType[] | undefined;
   setCityUrl: React.Dispatch<React.SetStateAction<string>>;
   setValueSelectedCity: React.Dispatch<React.SetStateAction<string>>;
-  setValueSelectedPokemon: React.Dispatch<React.SetStateAction<string>>;
   setDateValue: React.Dispatch<React.SetStateAction<string>>;
   setListPokemonRegistered: React.Dispatch<React.SetStateAction<PokemonListRegistered[]>>;
   dateData: string[] | undefined;
@@ -27,4 +25,5 @@ export type IDataContextPokemon = {
   setTimeValue: React.Dispatch<React.SetStateAction<string>>;
   valueListPokemonRegistered: IValueListPokemonRegistered
   setValueListPokemonRegistered: React.Dispatch<React.SetStateAction<IValueListPokemonRegistered>>;
+  ifAllDataIsFilled: () => boolean;
 }

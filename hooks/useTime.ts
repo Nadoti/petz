@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
+import { errorNotification, notification } from "utils/notification"
 
 
 const fetcher = (date: string): AxiosPromise<|string[] | undefined> => {
@@ -10,10 +11,16 @@ const fetcher = (date: string): AxiosPromise<|string[] | undefined> => {
 
 export function useTime(date: string) {
 
-  const { data } = useQuery({
+  const { data, error, isError } = useQuery({
     queryFn: () => fetcher(date),
-    queryKey: ['time']
+    queryKey: ['time'],
+    retry: 3,
+    refetchOnWindowFocus: false,
   })
+
+  if(isError) {
+    notification({type: errorNotification, message: error.message})
+  }
   return {
     timeData: data?.data
   }

@@ -14,9 +14,9 @@ export const useQueryParamState = <T extends number | string>(
   key: string,
   defaultValue: T,
 ) => {
+  const { push, query, pathname } = useRouter()
   const [value, setValue] = useState<T>(defaultValue)
 
-  const { push, query, pathname } = useRouter()
 
   const onChange = useCallback(
     (newValue: T) => {

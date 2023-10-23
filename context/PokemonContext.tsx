@@ -5,6 +5,7 @@ import { PokemonListRegistered } from "../types/pokemon-registered-types";
 import { useDate } from "../hooks/useDate";
 import { useTime } from "../hooks/useTime";
 import { IDataContextPokemon, IValueListPokemonRegistered } from "types/context-pokemon-types";
+import { useRouter } from "next/router";
 
 const PokemonContext = createContext<IDataContextPokemon | null>(null);
 
@@ -20,16 +21,30 @@ export function PokemonContextProvider({ children }: PropsWithChildren) {
   const [valueSelectedCity, setValueSelectedCity] = useState("Selecione sua cidade");
 
   const { pokemonData } = usePokemon(pokemonGenerationData?.url as string)
-  const [valueSelectedPokemon, setValueSelectedPokemon] = useState("Selecione seu pokémon")
   const [listPokemonRegistered, setListPokemonRegistered] = useState<PokemonListRegistered[]>([])
 
   const [ valueListPokemonRegistered, setValueListPokemonRegistered] = useState<IValueListPokemonRegistered>({})
-
+  
   const { dateData } = useDate();
   const [dateValue, setDateValue] = useState("Selecione uma data")
 
   const { timeData } = useTime(dateValue);
-  const [timeValue, setTimeValue] = useState("Selecione uma data")
+  const [timeValue, setTimeValue] = useState("Selecione um horário")
+
+  const router = useRouter();
+  const { name, surname } = router.query;
+
+  function ifAllDataIsFilled() {
+    if(!name && !surname && timeValue.includes("Selecione") && dateValue.includes("Selecione") && valueSelectedCity.includes("Selecione") && !cityUrl && listPokemonRegistered.length === 0) {
+      return false;
+    }
+    for (let prop in valueListPokemonRegistered) {
+      if(valueListPokemonRegistered[prop].includes("Selecione")) {
+        return false;
+      }
+    }
+    return true;
+  }
   
   return (
     <PokemonContext.Provider
@@ -40,9 +55,7 @@ export function PokemonContextProvider({ children }: PropsWithChildren) {
         loading, 
         valueSelectedCity, 
         setValueSelectedCity, 
-        pokemonData, 
-        valueSelectedPokemon, 
-        setValueSelectedPokemon, 
+        pokemonData,
         listPokemonRegistered, 
         setListPokemonRegistered, 
         pokemonGenerationData, 
@@ -53,7 +66,8 @@ export function PokemonContextProvider({ children }: PropsWithChildren) {
         timeValue, 
         setTimeValue,
         valueListPokemonRegistered,
-        setValueListPokemonRegistered
+        setValueListPokemonRegistered,
+        ifAllDataIsFilled
       }}
     >
       {children}

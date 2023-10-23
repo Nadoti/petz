@@ -6,6 +6,7 @@ import { Inter } from '@next/font/google'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PokemonContextProvider } from 'context/PokemonContext'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -15,12 +16,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={client}>
-    <div className={inter.className}>
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
-      <ToastContainer />
-    </div>
+      <PokemonContextProvider>
+      <div className={inter.className}>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
+        <ToastContainer />
+      </div>
+      </PokemonContextProvider>
     </QueryClientProvider>
   )
 }
