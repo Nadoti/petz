@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react";
 import { Input } from "../../../components/form/Input";
 
 describe("Input funciona quando:", () => {
-  it("deve chamar setValue com o valor correto quando o input é alterado", () => {
+  it("call setValue with the correct value when the input is changed", () => {
     const mockSetValue = jest.fn();
     const { getByLabelText } = render(
       <Input
