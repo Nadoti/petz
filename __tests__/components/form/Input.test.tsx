@@ -21,4 +21,20 @@ describe("Input funciona quando:", () => {
 
     expect(mockSetValue).toHaveBeenCalledWith("texto para testar"); 
   });
+
+  it("show the name in field", () => {
+    const mockSetValue = jest.fn();
+    const { getByText } = render(
+      <Input 
+        label="Nome"
+        name="nome"
+        id="nome"
+        placeholder="Digite seu nome"
+        setValue={mockSetValue}
+      />
+    )
+    const input = getByText("Nome")
+
+    expect(input).toBeInTheDocument()
+  })
 });

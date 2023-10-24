@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
 import { CityType } from "../types/city-types"
-import { errorNotification, notification } from "utils/notification"
+import { errorNotification, notification } from "../utils/notification"
 
 
 const fetcher = (url: string): AxiosPromise<CityType> => {

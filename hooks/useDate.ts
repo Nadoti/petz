@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
-import { errorNotification, notification } from "utils/notification"
+import { errorNotification, notification } from "../utils/notification"
 
 const fetcher = (): AxiosPromise<string[] | undefined> => {
   return axios.get("http://localhost:3000/api/scheduling/date")

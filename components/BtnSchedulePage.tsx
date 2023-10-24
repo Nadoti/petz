@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useDataPokemonContext } from "context/PokemonContext";
+import { useDataPokemonContext } from "../context/PokemonContext";
 
 export function BtnScheduleNewAppointment({ text }: {text: string}) {
   const router = useRouter();

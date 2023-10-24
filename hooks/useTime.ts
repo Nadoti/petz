@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios, { AxiosPromise } from "axios"
-import { errorNotification, notification } from "utils/notification"
+import { errorNotification, notification } from "../utils/notification"
 
 
 const fetcher = (date: string): AxiosPromise<|string[] | undefined> => {

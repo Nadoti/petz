@@ -13,7 +13,7 @@ describe("<Header>", () => {
     expect(agendarConsultaLink).toBeInTheDocument();
   });
 
-  it("should render the LogoNav component", () => {
+  it("render the LogoNav component", () => {
     render(<Header />);
 
     const logoNav = screen.getByLabelText("home page");

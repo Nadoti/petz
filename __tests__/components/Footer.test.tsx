@@ -6,7 +6,7 @@ describe("<Footer>", () => {
   it("render the Footer component with the correct text", () => {
     render(<Footer />);
 
-    const textElement = screen.getByText("Todas as marcas e ilustrações utilizadas são de seus resepctivos donos.");
+    const textElement = screen.getByText("Todas as marcas e ilustrações utilizadas são de seus respectivos donos.");
 
     expect(textElement).toBeInTheDocument();
   });
