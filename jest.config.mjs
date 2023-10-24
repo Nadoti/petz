@@ -17,6 +17,7 @@ const config = {
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/components/$1',
     '^@/hooks/(.*)$': '<rootDir>/hooks/$1',
+    "^context/PokemonContext$": "<rootDir>/__mocks__/context/PokemonContext.js"
   },
 
 }

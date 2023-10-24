@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { BtnScheduleNewAppointment } from "../BtnSchedulePage";
+import { BtnScheduleNewAppointment } from "../BtnScheduleNewAppointment";
 
 
 type IResultFormAppointment = {

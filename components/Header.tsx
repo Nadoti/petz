@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LogoNav } from "./LogoNav";
-import { BtnScheduleNewAppointment } from "./BtnSchedulePage";
+import { BtnScheduleNewAppointment } from "./BtnScheduleNewAppointment";
 
 export function Header() {
 
