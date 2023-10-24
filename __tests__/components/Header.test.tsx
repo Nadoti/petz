@@ -12,7 +12,6 @@ jest.mock("next/router", () => ({
 
 jest.mock("../../components/BtnScheduleNewAppointment", () => {
   return {
-    __esModule: true,
     BtnScheduleNewAppointment: () => <button>Agendar Consulta</button>,
   };
 });
