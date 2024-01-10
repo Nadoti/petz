@@ -3,7 +3,7 @@ import axios, { AxiosPromise } from "axios"
 import { errorNotification, notification } from "../utils/notification"
 
 const fetcher = (): AxiosPromise<string[] | undefined> => {
-  return axios.get("http://localhost:3000/api/scheduling/date")
+  return axios.get("http://petz-seven.vercel.app/api/scheduling/date")
 }
 
 export function useDate() {
